@@ -11,10 +11,10 @@ func main(){
   port := os.Getenv("PORT")
 
   if (port == "") {
-    port = ":3000"
+    port = "3000"
   }
 
   http.HandleFunc("/", helloWorld)
-  http.ListenAndServe(port, http.DefaultServeMux)
+  http.ListenAndServe(":"+port, http.DefaultServeMux)
 }
 
