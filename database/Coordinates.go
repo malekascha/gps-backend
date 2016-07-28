@@ -2,10 +2,10 @@ package database
 
 type Point struct {
   Message string `json:"message"`
-  Coords coordinates `json:"coords"`
+  Geojson coordinates `json:"geojson"`
 }
 
 type coordinates struct {
-  Lat int `json:"lat"`
-  Long int `json:"long"`
+  Type string `json:"type"`
+  Coordinates []float64 `json:"coords"`
 }
