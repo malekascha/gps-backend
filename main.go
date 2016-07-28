@@ -1,9 +1,9 @@
 package main
 
 import (
-  // "gopkg.in/mgo.v2"
   "net/http"
   "os"
+  "fmt"
 )
 
 func main(){
@@ -15,6 +15,8 @@ func main(){
   }
 
   http.HandleFunc("/", helloWorld)
+  http.HandleFunc("/addcoords", addCoords)
+  fmt.Println("Now listening at "+port)
   http.ListenAndServe(":"+port, http.DefaultServeMux)
 }
 
