@@ -2,6 +2,9 @@
 	"ImportPath": "github.com/malekascha/gps-backend",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "gopkg.in/mgo.v2",
