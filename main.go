@@ -4,6 +4,7 @@ import (
   "net/http"
   "os"
   "fmt"
+  // "github.com/malekascha/gps-backend/database"
 )
 
 func main(){
@@ -16,7 +17,11 @@ func main(){
 
   http.HandleFunc("/", helloWorld)
   http.HandleFunc("/addcoords", addCoords)
+  http.HandleFunc("/getmessages", getMessages)
   fmt.Println("Now listening at "+port)
   http.ListenAndServe(":"+port, http.DefaultServeMux)
+
+  // r := database.RetrieveCoords([]int{25,25}, 300000000000)
+  // fmt.Println(r)
 }
 
