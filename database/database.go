@@ -8,6 +8,8 @@ import (
   "os"
 )
 
+
+
 func StoreCoords (coords Point) error {
   mongo_uri := "mongodb://"+os.Getenv("DB_USER")+":"+os.Getenv("DB_PASS")+"@ds029745.mlab.com:29745/heroku_47clc7sm"
 
