@@ -16,7 +16,7 @@ func main(){
   }
 
   http.HandleFunc("/", helloWorld)
-  http.HandleFunc("/addcoords", addCoords)
+  http.HandleFunc("/addmessage", addCoords)
   http.HandleFunc("/getmessages", getMessages)
   fmt.Println("Now listening at "+port)
   http.ListenAndServe(":"+port, http.DefaultServeMux)
