@@ -5,10 +5,13 @@ import (
   "gopkg.in/mgo.v2/bson"
   // "fmt"
   "encoding/json"
+  "os"
 )
 
 func StoreCoords (coords Point) error {
-  session, err := mgo.Dial("mongodb://admin:intelligenttraffic@ds029745.mlab.com:29745/heroku_47clc7sm")
+  mongo_uri := "mongodb://"+os.Getenv("DB_USER")+":"+os.Getenv("DB_PASS")+"@ds029745.mlab.com:29745/heroku_47clc7sm"
+
+  session, err := mgo.Dial(mongo_uri)
   if(err != nil){
     return err
   }
@@ -21,7 +24,8 @@ func StoreCoords (coords Point) error {
 }
 
 func RetrieveMessages (coords []float64, radius float64) ([]byte, error) {
-  session, err := mgo.Dial("mongodb://admin:intelligenttraffic@ds029745.mlab.com:29745/heroku_47clc7sm")
+  mongo_uri := "mongodb://"+os.Getenv("DB_USER")+":"+os.Getenv("DB_PASS")+"@ds029745.mlab.com:29745/heroku_47clc7sm"
+  session, err := mgo.Dial(mongo_uri)
   if(err != nil){
     return []byte{}, err
   }
