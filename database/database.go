@@ -6,12 +6,30 @@ import (
   // "fmt"
   "encoding/json"
   "os"
+  "errors"
 )
 
-
-
 func StoreCoords (coords Point) error {
-  mongo_uri := "mongodb://"+os.Getenv("DB_USER")+":"+os.Getenv("DB_PASS")+"@ds029745.mlab.com:29745/heroku_47clc7sm"
+  user := os.Getenv("DB_USER")
+  pass := os.Getenv("DB_PASS")
+
+  mongo_uri := "mongodb://"+user+":"+pass+"@ds029745.mlab.com:29745/heroku_47clc7sm"
+
+  if(len(coords.Message) == 0){
+    return errors.New("must have message")
+  }
+
+  if(len(coords.Owner) == 0){
+    return errors.New("must have valid owner")
+  }
+
+  if(coords.Geojson.Type != "Point"){
+    return errors.New("must be GeoJSON of type Point")
+  }
+
+  if(len(coords.Geojson.Coordinates) != 2){
+    return errors.New("must provide pair of valid coordinates")
+  }
 
   session, err := mgo.Dial(mongo_uri)
   if(err != nil){
@@ -26,7 +44,10 @@ func StoreCoords (coords Point) error {
 }
 
 func RetrieveMessages (coords []float64, radius float64) ([]byte, error) {
-  mongo_uri := "mongodb://"+os.Getenv("DB_USER")+":"+os.Getenv("DB_PASS")+"@ds029745.mlab.com:29745/heroku_47clc7sm"
+  user := os.Getenv("DB_USER")
+  pass := os.Getenv("DB_PASS")
+
+  mongo_uri := "mongodb://"+user+":"+pass+"@ds029745.mlab.com:29745/heroku_47clc7sm"
   session, err := mgo.Dial(mongo_uri)
   if(err != nil){
     return []byte{}, err
@@ -48,3 +69,4 @@ func RetrieveMessages (coords []float64, radius float64) ([]byte, error) {
   }
   return jsonString, nil
 }
+

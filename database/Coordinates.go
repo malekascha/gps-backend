@@ -3,7 +3,7 @@ package database
 type Point struct {
   Message string `json:"message"`
   Geojson coordinates `json:"geojson"`
-  Owner int `json:"owner"`
+  Owner string `json:"owner"`
 }
 
 type coordinates struct {
