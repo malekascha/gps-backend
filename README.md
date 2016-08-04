@@ -1,6 +1,6 @@
 #Using the API
 
-This API currently has two paths.
+The following are endpoints to interact with the API:
 
 /api/addmessage
 
