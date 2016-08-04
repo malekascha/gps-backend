@@ -37,7 +37,7 @@ func addCoords (w http.ResponseWriter, r *http.Request) {
   w.Write([]byte("Point added to database"))
 }
 
-func getMessages (w http.ResponseWriter, r *http.Request) {
+func getMessagesByRadius (w http.ResponseWriter, r *http.Request) {
   if r.Method != "GET" {
     http.Error(w, "Unsupported HTTP Method", http.StatusMethodNotAllowed)
     return
@@ -65,7 +65,34 @@ func getMessages (w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  messages, err := database.RetrieveMessages([]float64{lat, long}, radius)
+  messages, err := database.RetrieveMessagesByRadius([]float64{lat, long}, radius)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+
+  w.Write(messages)
+}
+
+func getMessagesByOwner (w http.ResponseWriter, r *http.Request) {
+  if r.Method != "GET" {
+    http.Error(w, "Unsupported HTTP Method", http.StatusMethodNotAllowed)
+    return
+  }
+
+  params, err := url.ParseQuery(r.URL.RawQuery)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+
+  owner := params.Get("owner")
+  if(owner == ""){
+    http.Error(w, "must provide name of owner", http.StatusBadRequest)
+    return
+  }
+
+  messages, err := database.RetrieveMessagesByOwner(owner)
   if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
