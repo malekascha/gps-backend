@@ -28,4 +28,4 @@ For example, to get all messages within 5000 meters of 25,25, simply make a GET 
 
 #Notes
 
-API url is highwaymessage.com.
+API url is http://www.highwaymessage.com.
