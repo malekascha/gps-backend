@@ -20,8 +20,5 @@ func main(){
   http.HandleFunc("/api/getmessagesbyradius", getMessages)
   fmt.Println("Now listening at "+port)
   http.ListenAndServe(":"+port, http.DefaultServeMux)
-
-  // r := database.RetrieveCoords([]int{25,25}, 300000000000)
-  // fmt.Println(r)
 }
 
