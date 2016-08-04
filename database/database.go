@@ -43,7 +43,7 @@ func StoreCoords (coords Point) error {
   return err
 }
 
-func RetrieveMessages (coords []float64, radius float64) ([]byte, error) {
+func RetrieveMessagesByRadius (coords []float64, radius float64) ([]byte, error) {
   user := os.Getenv("DB_USER")
   pass := os.Getenv("DB_PASS")
 
@@ -70,3 +70,29 @@ func RetrieveMessages (coords []float64, radius float64) ([]byte, error) {
   return jsonString, nil
 }
 
+func RetrieveMessagesByOwner(owner string) ([]byte, error) {
+  user := os.Getenv("DB_USER")
+  pass := os.Getenv("DB_PASS")
+
+  mongo_uri := "mongodb://"+user+":"+pass+"@ds029745.mlab.com:29745/heroku_47clc7sm"
+  session, err := mgo.Dial(mongo_uri)
+  if(err != nil){
+    return []byte{}, err
+  }
+  defer session.Close()
+
+  c := session.DB("heroku_47clc7sm").C("coordinates")
+  var result []interface{}
+
+  query := bson.M{"owner": owner}
+  err = c.Find(query).All(&result)
+  if(err != nil){
+    return []byte{}, err
+  }
+
+  jsonString, err := json.Marshal(result)
+  if(err != nil){
+    return []byte{}, err
+  }
+  return jsonString, nil
+}
